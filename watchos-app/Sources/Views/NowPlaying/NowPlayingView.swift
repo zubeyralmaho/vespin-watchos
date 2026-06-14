@@ -135,6 +135,7 @@ private struct TurntableView: View {
 
             Circle()
                 .fill(Color(red: 0.95, green: 0.91, blue: 0.88))
+                .frame(width: size * 0.86, height: size * 0.86)
                 .shadow(color: Color.black.opacity(0.45), radius: 18, y: 10)
 
             Circle()
