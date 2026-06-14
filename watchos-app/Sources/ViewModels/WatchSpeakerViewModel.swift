@@ -106,6 +106,12 @@ final class WatchSpeakerViewModel: ObservableObject {
         }
     }
 
+    func setVolume(_ value: Int) {
+        let clamped = max(0, min(100, value))
+        state.volume = clamped
+        state.isMuted = clamped == 0
+    }
+
     func applyPreset(_ preset: QuickPreset) {
         state.preset = preset
     }

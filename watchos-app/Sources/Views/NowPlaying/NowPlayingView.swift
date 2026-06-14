@@ -38,8 +38,13 @@ struct NowPlayingView: View {
                         Spacer(minLength: 0)
                     }
 
-                    TurntableView(assetName: albumAssetName, size: turntableSize, volume: viewModel.state.volume)
-                        .padding(.top, -6)
+                    TurntableView(
+                        assetName: albumAssetName,
+                        size: turntableSize,
+                        volume: viewModel.state.volume,
+                        onVolumeChange: viewModel.setVolume
+                    )
+                    .padding(.top, -6)
 
                     Spacer(minLength: 2)
 
@@ -126,6 +131,9 @@ private struct TurntableView: View {
     let assetName: String
     let size: CGFloat
     let volume: Int
+    let onVolumeChange: (Int) -> Void
+
+    @State private var crownValue: Double = 0
 
     var body: some View {
         let progress = max(0, min(1, Double(volume) / 100))
@@ -166,6 +174,44 @@ private struct TurntableView: View {
                 .shadow(color: Color.black.opacity(0.22), radius: 4, y: 2)
         }
         .frame(width: size, height: size)
+        .contentShape(Circle())
+        .focusable(true)
+        .digitalCrownRotation(
+            $crownValue,
+            from: 0,
+            through: 100,
+            by: 1,
+            sensitivity: .medium,
+            isContinuous: false,
+            isHapticFeedbackEnabled: true
+        )
+        .onChange(of: crownValue) { _, newValue in
+            let intValue = Int(newValue.rounded())
+            if intValue != volume {
+                onVolumeChange(intValue)
+            }
+        }
+        .onAppear { crownValue = Double(volume) }
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { value in
+                    let center = CGPoint(x: size / 2, y: size / 2)
+                    let dx = value.location.x - center.x
+                    let dy = value.location.y - center.y
+                    let distance = sqrt(dx * dx + dy * dy)
+                    let ringRadius = ringDiameter / 2
+                    let hitBand = size * 0.10
+                    guard distance >= ringRadius - hitBand,
+                          distance <= ringRadius + hitBand else { return }
+                    var angle = atan2(dy, dx) * 180 / .pi + 90
+                    if angle < 0 { angle += 360 }
+                    let newVolume = Int((angle / 360 * 100).rounded())
+                    if newVolume != volume {
+                        crownValue = Double(newVolume)
+                        onVolumeChange(newVolume)
+                    }
+                }
+        )
     }
 }
 
