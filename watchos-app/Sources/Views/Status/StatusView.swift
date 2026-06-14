@@ -31,6 +31,7 @@ struct StatusView: View {
                             .foregroundStyle(Color.white)
                         }
                         .buttonStyle(.plain)
+                        .padding(.leading, 8)
 
                         Spacer(minLength: 0)
                     }
