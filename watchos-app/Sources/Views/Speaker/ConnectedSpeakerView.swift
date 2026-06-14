@@ -18,10 +18,8 @@ struct ConnectedSpeakerView: View {
                     speakersTile
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 8)
-            .padding(.top, 10)
-            .padding(.bottom, 10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .padding(.horizontal, 18)
         }
     }
 
@@ -167,7 +165,8 @@ private struct DashboardMockTile<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(
