@@ -11,7 +11,7 @@ struct NowPlayingView: View {
             GeometryReader { proxy in
                 // Densest screen: keep the turntable bounded by height so the
                 // transport controls and footer always stay on screen (40/41mm).
-                let turntableSize = min(proxy.size.width * 0.62, proxy.size.height * 0.42)
+                let turntableSize = min(proxy.size.width * 0.68, proxy.size.height * 0.46)
 
                 VStack(spacing: 0) {
                     HStack {
@@ -39,7 +39,7 @@ struct NowPlayingView: View {
                     }
 
                     TurntableView(assetName: albumAssetName, size: turntableSize)
-                        .padding(.top, -2)
+                        .padding(.top, -6)
 
                     Spacer(minLength: 2)
 
