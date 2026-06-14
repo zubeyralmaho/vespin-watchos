@@ -20,8 +20,8 @@ struct ConnectedSpeakerView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 8)
-            .padding(.top, 14)
-            .padding(.bottom, 6)
+            .padding(.top, 10)
+            .padding(.bottom, 4)
         }
     }
 
@@ -47,7 +47,7 @@ struct ConnectedSpeakerView: View {
                     .allowsTightening(true)
                     .padding(.horizontal, 6)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -77,7 +77,7 @@ struct ConnectedSpeakerView: View {
                         .lineLimit(1)
                 }
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -105,7 +105,7 @@ struct ConnectedSpeakerView: View {
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(Color.white)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -135,7 +135,7 @@ struct ConnectedSpeakerView: View {
                     .minimumScaleFactor(0.75)
                     .lineLimit(1)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
