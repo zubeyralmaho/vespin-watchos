@@ -94,8 +94,6 @@ extension QuickPreset {
             self = .none
         case "jazz":
             self = .jazz
-        case "bassboots", "bass-boots", "bass":
-            self = .bassBoots
         case "rock":
             self = .rock
         case "demo":

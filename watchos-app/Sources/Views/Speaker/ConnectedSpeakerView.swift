@@ -153,7 +153,7 @@ struct ConnectedSpeakerView: View {
     }
 
     private var eqTone: Color {
-        viewModel.state.preset == .bassBoots ? WatchColors.accentRed : Color(red: 0.14, green: 0.14, blue: 0.14)
+        viewModel.state.preset == .none ? Color(red: 0.14, green: 0.14, blue: 0.14) : WatchColors.accentRed
     }
 
 }

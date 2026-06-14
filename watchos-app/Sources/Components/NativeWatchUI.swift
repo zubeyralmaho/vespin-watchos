@@ -26,8 +26,6 @@ extension QuickPreset {
             return WatchColors.accentBlue
         case .demo:
             return WatchColors.success
-        case .bassBoots:
-            return WatchColors.accentGold
         }
     }
 }
