@@ -61,6 +61,7 @@ struct StatusView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.horizontal, 6)
+                .padding(.top, 8)
                 .padding(.bottom, 4)
             }
         }

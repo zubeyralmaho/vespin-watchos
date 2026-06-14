@@ -108,6 +108,7 @@ struct NowPlayingView: View {
                   .frame(minHeight: proxy.size.height)
                   .frame(maxWidth: .infinity, alignment: .top)
                   .padding(.horizontal, 10)
+                  .padding(.top, 6)
                 }
             }
         }
