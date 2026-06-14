@@ -38,7 +38,7 @@ struct NowPlayingView: View {
                         Spacer(minLength: 0)
                     }
 
-                    TurntableView(assetName: albumAssetName, size: turntableSize)
+                    TurntableView(assetName: albumAssetName, size: turntableSize, volume: viewModel.state.volume)
                         .padding(.top, -6)
 
                     Spacer(minLength: 2)
@@ -125,8 +125,12 @@ struct NowPlayingView: View {
 private struct TurntableView: View {
     let assetName: String
     let size: CGFloat
+    let volume: Int
 
     var body: some View {
+        let progress = max(0, min(1, Double(volume) / 100))
+        let ringDiameter = size * 0.72
+
         ZStack {
             Circle()
                 .fill(Color(red: 0.96, green: 0.72, blue: 0.55).opacity(0.55))
@@ -139,39 +143,27 @@ private struct TurntableView: View {
                 .shadow(color: Color.black.opacity(0.45), radius: 18, y: 10)
 
             Circle()
-                .trim(from: 0.03, to: 0.78)
-                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42), style: StrokeStyle(lineWidth: size * 0.045, lineCap: .round))
-                .rotationEffect(.degrees(184))
-                .frame(width: size * 0.78, height: size * 0.78)
+                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42).opacity(0.45), style: StrokeStyle(lineWidth: size * 0.05, lineCap: .round))
+                .frame(width: ringDiameter, height: ringDiameter)
 
             Circle()
-                .trim(from: 0.12, to: 0.88)
-                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.045, lineCap: .round))
-                .rotationEffect(.degrees(10))
-                .frame(width: size * 0.64, height: size * 0.64)
+                .trim(from: 0, to: progress)
+                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.05, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .frame(width: ringDiameter, height: ringDiameter)
 
             Image(assetName)
                 .resizable()
                 .scaledToFill()
-                .frame(width: size * 0.46, height: size * 0.46)
+                .frame(width: size * 0.50, height: size * 0.50)
                 .clipShape(Circle())
-
-            Capsule()
-                .fill(Color(red: 0.53, green: 0.28, blue: 0.25))
-                .frame(width: size * 0.11, height: size * 0.025)
-                .rotationEffect(.degrees(-42))
-                .offset(x: size * 0.25, y: size * 0.02)
 
             Circle()
                 .fill(Color(red: 0.48, green: 0.13, blue: 0.17))
-                .frame(width: size * 0.08, height: size * 0.08)
-                .offset(x: size * 0.31, y: size * 0.05)
-                .shadow(color: Color.black.opacity(0.22), radius: 6, y: 3)
-
-            Circle()
-                .fill(Color(red: 0.76, green: 0.66, blue: 0.63))
-                .frame(width: size * 0.03, height: size * 0.03)
-                .offset(x: size * 0.31, y: size * 0.05)
+                .frame(width: size * 0.07, height: size * 0.07)
+                .offset(y: -ringDiameter / 2)
+                .rotationEffect(.degrees(progress * 360))
+                .shadow(color: Color.black.opacity(0.22), radius: 4, y: 2)
         }
         .frame(width: size, height: size)
     }
