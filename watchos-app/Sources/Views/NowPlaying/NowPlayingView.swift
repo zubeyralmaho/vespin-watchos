@@ -11,25 +11,24 @@ struct NowPlayingView: View {
             GeometryReader { proxy in
                 // Densest screen: keep the turntable bounded by height so the
                 // transport controls and footer always stay on screen (40/41mm).
-                let turntableSize = min(proxy.size.width * 0.46, proxy.size.height * 0.30)
+                let turntableSize = min(proxy.size.width * 0.68, proxy.size.height * 0.46)
 
-                ScrollView(.vertical, showsIndicators: false) {
-                  VStack(spacing: 0) {
+                VStack(spacing: 0) {
                     HStack {
                         Button {
                             navigate(to: .dashboard)
                         } label: {
-                            HStack(spacing: 6) {
+                            HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 22, weight: .regular))
+                                    .font(.system(size: 18, weight: .regular))
 
                                 ZStack(alignment: .topLeading) {
                                     Image(systemName: "music.note")
-                                        .font(.system(size: 17, weight: .regular))
+                                        .font(.system(size: 14, weight: .regular))
 
                                     Image(systemName: "sparkles")
-                                        .font(.system(size: 9, weight: .regular))
-                                        .offset(x: -8, y: -2)
+                                        .font(.system(size: 8, weight: .regular))
+                                        .offset(x: -6, y: -2)
                                 }
                             }
                             .foregroundStyle(Color.white)
@@ -39,31 +38,34 @@ struct NowPlayingView: View {
                         Spacer(minLength: 0)
                     }
 
-                    Spacer(minLength: 4)
+                    TurntableView(
+                        assetName: albumAssetName,
+                        size: turntableSize,
+                        volume: viewModel.state.volume,
+                        onVolumeChange: viewModel.setVolume
+                    )
+                    .padding(.top, -6)
 
-                    TurntableView(assetName: albumAssetName, size: turntableSize)
-
-                    Spacer(minLength: 4)
+                    Spacer(minLength: 2)
 
                     VStack(spacing: 0) {
                         Text(viewModel.state.nowPlayingArtist)
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
                             .foregroundStyle(Color.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
 
                         Text(viewModel.state.nowPlayingTitle)
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                            .font(.system(size: 14, weight: .regular, design: .rounded))
                             .foregroundStyle(Color.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
                     }
-                    .padding(.top, 1)
 
-                    Spacer(minLength: 6)
+                    Spacer(minLength: 4)
 
-                    HStack(spacing: 30) {
-                        PlainIconButton(systemName: "backward.end.fill", size: 20) {
+                    HStack(spacing: 22) {
+                        PlainIconButton(systemName: "backward.end.fill", size: 15) {
                             viewModel.previousTrack()
                         }
 
@@ -72,43 +74,43 @@ struct NowPlayingView: View {
                         } label: {
                             ZStack {
                                 Circle()
-                                    .stroke(Color.white, lineWidth: 3.5)
-                                    .frame(width: 46, height: 46)
+                                    .stroke(Color.white, lineWidth: 2.5)
+                                    .frame(width: 34, height: 34)
 
                                 Image(systemName: viewModel.state.playbackStatus == .playing ? "pause.fill" : "play.fill")
-                                    .font(.system(size: 17, weight: .semibold))
+                                    .font(.system(size: 13, weight: .semibold))
                                     .foregroundStyle(Color.white)
                             }
                         }
                         .buttonStyle(.plain)
 
-                        PlainIconButton(systemName: "forward.end.fill", size: 20) {
+                        PlainIconButton(systemName: "forward.end.fill", size: 15) {
                             viewModel.nextTrack()
                         }
                     }
 
-                    Spacer(minLength: 6)
+                    Spacer(minLength: 4)
 
-                    HStack(spacing: 6) {
+                    HStack(spacing: 4) {
                         Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 12, weight: .medium))
+                            .font(.system(size: 10, weight: .medium))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
 
                         Text(viewModel.state.nowPlayingCollection)
-                            .font(.system(size: 12, weight: .regular, design: .rounded))
+                            .font(.system(size: 10, weight: .regular, design: .rounded))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
 
                         Text("•••")
-                            .font(.system(size: 12, weight: .bold))
+                            .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
                     }
-                  }
-                  .frame(minHeight: proxy.size.height)
-                  .frame(maxWidth: .infinity, alignment: .top)
-                  .padding(.horizontal, 10)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(.horizontal, 10)
+                .padding(.top, 4)
+                .padding(.bottom, 4)
             }
         }
     }
@@ -128,49 +130,88 @@ struct NowPlayingView: View {
 private struct TurntableView: View {
     let assetName: String
     let size: CGFloat
+    let volume: Int
+    let onVolumeChange: (Int) -> Void
+
+    @State private var crownValue: Double = 0
 
     var body: some View {
+        let progress = max(0, min(1, Double(volume) / 100))
+        let ringDiameter = size * 0.72
+
         ZStack {
             Circle()
+                .fill(Color(red: 0.96, green: 0.72, blue: 0.55).opacity(0.55))
+                .frame(width: size * 1.15, height: size * 1.15)
+                .blur(radius: size * 0.22)
+
+            Circle()
                 .fill(Color(red: 0.95, green: 0.91, blue: 0.88))
+                .frame(width: size * 0.86, height: size * 0.86)
                 .shadow(color: Color.black.opacity(0.45), radius: 18, y: 10)
 
             Circle()
-                .trim(from: 0.03, to: 0.78)
-                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42), style: StrokeStyle(lineWidth: size * 0.03, lineCap: .butt))
-                .rotationEffect(.degrees(184))
-                .frame(width: size * 0.72, height: size * 0.72)
+                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42).opacity(0.45), style: StrokeStyle(lineWidth: size * 0.05, lineCap: .round))
+                .frame(width: ringDiameter, height: ringDiameter)
 
             Circle()
-                .trim(from: 0.12, to: 0.88)
-                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.03, lineCap: .round))
-                .rotationEffect(.degrees(10))
-                .frame(width: size * 0.58, height: size * 0.58)
+                .trim(from: 0, to: progress)
+                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.05, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .frame(width: ringDiameter, height: ringDiameter)
 
             Image(assetName)
                 .resizable()
                 .scaledToFill()
-                .frame(width: size * 0.36, height: size * 0.36)
+                .frame(width: size * 0.50, height: size * 0.50)
                 .clipShape(Circle())
-
-            Capsule()
-                .fill(Color(red: 0.53, green: 0.28, blue: 0.25))
-                .frame(width: size * 0.11, height: size * 0.025)
-                .rotationEffect(.degrees(-42))
-                .offset(x: size * 0.25, y: size * 0.02)
 
             Circle()
                 .fill(Color(red: 0.48, green: 0.13, blue: 0.17))
-                .frame(width: size * 0.08, height: size * 0.08)
-                .offset(x: size * 0.31, y: size * 0.05)
-                .shadow(color: Color.black.opacity(0.22), radius: 6, y: 3)
-
-            Circle()
-                .fill(Color(red: 0.76, green: 0.66, blue: 0.63))
-                .frame(width: size * 0.03, height: size * 0.03)
-                .offset(x: size * 0.31, y: size * 0.05)
+                .frame(width: size * 0.07, height: size * 0.07)
+                .offset(y: -ringDiameter / 2)
+                .rotationEffect(.degrees(progress * 360))
+                .shadow(color: Color.black.opacity(0.22), radius: 4, y: 2)
         }
         .frame(width: size, height: size)
+        .contentShape(Circle())
+        .focusable(true)
+        .digitalCrownRotation(
+            $crownValue,
+            from: 0,
+            through: 100,
+            by: 1,
+            sensitivity: .medium,
+            isContinuous: false,
+            isHapticFeedbackEnabled: true
+        )
+        .onChange(of: crownValue) { _, newValue in
+            let intValue = Int(newValue.rounded())
+            if intValue != volume {
+                onVolumeChange(intValue)
+            }
+        }
+        .onAppear { crownValue = Double(volume) }
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { value in
+                    let center = CGPoint(x: size / 2, y: size / 2)
+                    let dx = value.location.x - center.x
+                    let dy = value.location.y - center.y
+                    let distance = sqrt(dx * dx + dy * dy)
+                    let ringRadius = ringDiameter / 2
+                    let hitBand = size * 0.10
+                    guard distance >= ringRadius - hitBand,
+                          distance <= ringRadius + hitBand else { return }
+                    var angle = atan2(dy, dx) * 180 / .pi + 90
+                    if angle < 0 { angle += 360 }
+                    let newVolume = Int((angle / 360 * 100).rounded())
+                    if newVolume != volume {
+                        crownValue = Double(newVolume)
+                        onVolumeChange(newVolume)
+                    }
+                }
+        )
     }
 }
 

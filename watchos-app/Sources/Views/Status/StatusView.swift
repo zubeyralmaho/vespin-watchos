@@ -20,7 +20,7 @@ struct StatusView: View {
                 VStack(spacing: 0) {
                     HStack {
                         Button {
-                            navigate(to: mode == .battery ? .speakersConnected : .dashboard)
+                            navigate(to: .dashboard)
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
@@ -31,6 +31,7 @@ struct StatusView: View {
                             .foregroundStyle(Color.white)
                         }
                         .buttonStyle(.plain)
+                        .padding(.leading, 8)
 
                         Spacer(minLength: 0)
                     }
@@ -41,7 +42,7 @@ struct StatusView: View {
                         .foregroundStyle(Color.white)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .padding(.top, 4)
+                        .padding(.top, 2)
 
                     if viewModel.state.syncStatus == .connected {
                         HStack(spacing: 4) {
@@ -52,10 +53,8 @@ struct StatusView: View {
                                 .monospacedDigit()
                         }
                         .foregroundStyle(WatchColors.success)
-                        .padding(.top, 2)
+                        .padding(.top, 1)
                     }
-
-                    Spacer(minLength: 4)
 
                     speakerCarousel(unit: speakerUnit)
                 }
@@ -67,7 +66,7 @@ struct StatusView: View {
     }
 
     private func speakerCarousel(unit: CGFloat) -> some View {
-        let overhangReserve = unit * 0.28 * 0.5
+        let overhangReserve = unit * 0.50 * 0.6
 
         return HStack(alignment: .bottom, spacing: unit * 0.04) {
             ForEach(Array(viewModel.speakerCarousel.enumerated()), id: \.element.id) { index, speaker in
@@ -113,9 +112,9 @@ struct StatusView: View {
 
     private func speakerPedestal(for speaker: SpeakerDisplayItem, unit: CGFloat) -> some View {
         let isSelected = speaker.isSelected
-        let width: CGFloat = isSelected ? unit * 0.28 : unit * 0.21
-        let height: CGFloat = isSelected ? unit * 0.30 : unit * 0.24
-        let imageWidth: CGFloat = isSelected ? unit * 0.26 : unit * 0.22
+        let width: CGFloat = isSelected ? unit * 0.42 : unit * 0.20
+        let height: CGFloat = isSelected ? unit * 0.50 : unit * 0.24
+        let imageWidth: CGFloat = isSelected ? unit * 0.38 : unit * 0.18
         let pedestalColor = Color(red: 0.94, green: 0.91, blue: 0.87)
 
         return RoundedRectangle(cornerRadius: width * 0.36, style: .continuous)
@@ -126,13 +125,11 @@ struct StatusView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: imageWidth)
-                    .offset(y: -height * 0.38)
+                    .offset(y: isSelected ? -height * 0.55 : -height * 0.38)
             }
-            .overlay {
+            .overlay(alignment: .bottom) {
                 if isSelected {
-                    VStack(spacing: 3) {
-                        Spacer(minLength: 0)
-
+                    VStack(spacing: 2) {
                         ZStack {
                             Circle()
                                 .fill(viewModel.state.syncStatus == .connected
@@ -141,10 +138,10 @@ struct StatusView: View {
                                 .shadow(color: viewModel.state.syncStatus == .connected
                                     ? Color.green.opacity(0.5) : .clear,
                                     radius: 4)
-                                .frame(width: 28, height: 28)
+                                .frame(width: 22, height: 22)
 
                             Image(systemName: "power")
-                                .font(.system(size: 13, weight: .regular))
+                                .font(.system(size: 11, weight: .regular))
                                 .foregroundStyle(viewModel.state.syncStatus == .connected
                                     ? Color(red: 0.45, green: 0.90, blue: 0.45)
                                     : Color(red: 0.55, green: 0.55, blue: 0.57))
@@ -153,9 +150,12 @@ struct StatusView: View {
                         Text(viewModel.state.syncStatus == .connected ? "Connected" : "Unconnected")
                             .font(.system(size: 9, weight: .regular, design: .rounded))
                             .foregroundStyle(Color(red: 0.25, green: 0.25, blue: 0.25))
-
-                        Spacer(minLength: 5)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .allowsTightening(true)
+                            .padding(.horizontal, 2)
                     }
+                    .padding(.bottom, 6)
                 }
             }
     }

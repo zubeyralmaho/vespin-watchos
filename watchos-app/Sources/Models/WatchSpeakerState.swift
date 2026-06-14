@@ -21,7 +21,6 @@ enum QuickPreset: String, CaseIterable, Identifiable {
     case jazz = "Jazz"
     case rock = "Rock"
     case demo = "Demo"
-    case bassBoots = "Bass Boots"
 
     var id: String { rawValue }
 }
@@ -37,8 +36,6 @@ extension QuickPreset {
             return "Sharper attack and presence"
         case .demo:
             return "Showroom speaker balance"
-        case .bassBoots:
-            return "Low-end lifted profile"
         }
     }
 
@@ -52,8 +49,6 @@ extension QuickPreset {
             return "waveform.path"
         case .demo:
             return "sparkles"
-        case .bassBoots:
-            return "slider.vertical.3"
         }
     }
 }

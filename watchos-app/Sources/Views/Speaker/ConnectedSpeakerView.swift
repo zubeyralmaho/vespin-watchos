@@ -8,25 +8,28 @@ struct ConnectedSpeakerView: View {
         ZStack {
             WatchScreenBackground()
 
-            VStack(spacing: 8) {
-                HStack(spacing: 8) {
-                    connectionTile
-                    eqTile
-                }
-                HStack(spacing: 8) {
-                    songTile
-                    speakersTile
-                }
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 8),
+                    GridItem(.flexible(), spacing: 8)
+                ],
+                spacing: 8
+            ) {
+                connectionTile
+                eqTile
+                songTile
+                speakersTile
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
+            .padding(.horizontal, 20)
         }
     }
 
     private var connectionTile: some View {
         DashboardMockTile(tone: connectionTone) {
-            navigate(to: .speakersConnected)
+            withAnimation(.easeInOut(duration: 0.2)) {
+                viewModel.toggleConnection()
+            }
         } content: {
             VStack(spacing: 6) {
                 Spacer(minLength: 0)
@@ -46,7 +49,7 @@ struct ConnectedSpeakerView: View {
                     .allowsTightening(true)
                     .padding(.horizontal, 6)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -64,7 +67,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("EQ")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
 
                 if let eqSubtitle {
@@ -76,7 +79,7 @@ struct ConnectedSpeakerView: View {
                         .lineLimit(1)
                 }
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -88,7 +91,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 ZStack {
-                    Image(systemName: "hand.tap")
+                    Image(systemName: "music.note")
                         .font(.system(size: 30, weight: .regular))
                         .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
 
@@ -101,10 +104,10 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("SONG")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -122,19 +125,12 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("SPEAKERS")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
                     .minimumScaleFactor(0.7)
                     .lineLimit(1)
-
-                Text(viewModel.state.roomName)
-                    .font(.system(size: 10, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Color.white)
-                    .shadow(color: Color.white.opacity(0.45), radius: 6)
-                    .minimumScaleFactor(0.75)
-                    .lineLimit(1)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
         }
     }
 
@@ -153,7 +149,7 @@ struct ConnectedSpeakerView: View {
     }
 
     private var eqTone: Color {
-        viewModel.state.preset == .bassBoots ? WatchColors.accentRed : Color(red: 0.14, green: 0.14, blue: 0.14)
+        viewModel.state.preset == .none ? Color(red: 0.14, green: 0.14, blue: 0.14) : WatchColors.accentRed
     }
 
 }
@@ -166,7 +162,8 @@ private struct DashboardMockTile<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity)
+                .frame(height: 74)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(
