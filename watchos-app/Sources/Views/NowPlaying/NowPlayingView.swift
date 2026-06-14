@@ -140,20 +140,20 @@ private struct TurntableView: View {
 
             Circle()
                 .trim(from: 0.03, to: 0.78)
-                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42), style: StrokeStyle(lineWidth: size * 0.03, lineCap: .butt))
+                .stroke(Color(red: 0.63, green: 0.45, blue: 0.42), style: StrokeStyle(lineWidth: size * 0.045, lineCap: .round))
                 .rotationEffect(.degrees(184))
-                .frame(width: size * 0.72, height: size * 0.72)
+                .frame(width: size * 0.78, height: size * 0.78)
 
             Circle()
                 .trim(from: 0.12, to: 0.88)
-                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.03, lineCap: .round))
+                .stroke(Color(red: 0.45, green: 0.15, blue: 0.16), style: StrokeStyle(lineWidth: size * 0.045, lineCap: .round))
                 .rotationEffect(.degrees(10))
-                .frame(width: size * 0.58, height: size * 0.58)
+                .frame(width: size * 0.64, height: size * 0.64)
 
             Image(assetName)
                 .resizable()
                 .scaledToFill()
-                .frame(width: size * 0.50, height: size * 0.50)
+                .frame(width: size * 0.46, height: size * 0.46)
                 .clipShape(Circle())
 
             Capsule()
