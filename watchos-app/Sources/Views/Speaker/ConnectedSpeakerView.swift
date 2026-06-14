@@ -21,7 +21,7 @@ struct ConnectedSpeakerView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 8)
             .padding(.top, 10)
-            .padding(.bottom, 4)
+            .padding(.bottom, 10)
         }
     }
 
