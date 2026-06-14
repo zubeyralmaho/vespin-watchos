@@ -20,7 +20,7 @@ struct StatusView: View {
                 VStack(spacing: 0) {
                     HStack {
                         Button {
-                            navigate(to: mode == .battery ? .speakersConnected : .dashboard)
+                            navigate(to: .dashboard)
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
