@@ -8,18 +8,20 @@ struct ConnectedSpeakerView: View {
         ZStack {
             WatchScreenBackground()
 
-            VStack(spacing: 8) {
-                HStack(spacing: 8) {
+            VStack(spacing: 6) {
+                HStack(spacing: 6) {
                     connectionTile
                     eqTile
                 }
-                HStack(spacing: 8) {
+                HStack(spacing: 6) {
                     songTile
                     speakersTile
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .padding(.horizontal, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, 10)
+            .padding(.top, 28)
+            .padding(.bottom, 18)
         }
     }
 
@@ -165,8 +167,7 @@ private struct DashboardMockTile<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(
