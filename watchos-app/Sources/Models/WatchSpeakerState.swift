@@ -18,9 +18,10 @@ extension PlaybackStatus {
 
 enum QuickPreset: String, CaseIterable, Identifiable {
     case none = "None"
-    case bassBoots = "Bass Boots"
+    case jazz = "Jazz"
     case rock = "Rock"
     case demo = "Demo"
+    case bassBoots = "Bass Boots"
 
     var id: String { rawValue }
 }
@@ -30,12 +31,14 @@ extension QuickPreset {
         switch self {
         case .none:
             return "Neutral house tuning"
-        case .bassBoots:
-            return "Low-end lifted profile"
+        case .jazz:
+            return "Warm and spacious tuning"
         case .rock:
             return "Sharper attack and presence"
         case .demo:
             return "Showroom speaker balance"
+        case .bassBoots:
+            return "Low-end lifted profile"
         }
     }
 
@@ -43,12 +46,14 @@ extension QuickPreset {
         switch self {
         case .none:
             return "slider.horizontal.3"
-        case .bassBoots:
-            return "slider.vertical.3"
+        case .jazz:
+            return "music.note.list"
         case .rock:
             return "waveform.path"
         case .demo:
             return "sparkles"
+        case .bassBoots:
+            return "slider.vertical.3"
         }
     }
 }

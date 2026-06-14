@@ -37,10 +37,6 @@ struct NowPlayingView: View {
                         .buttonStyle(.plain)
 
                         Spacer(minLength: 0)
-
-                        floatingNavButton(systemName: "house.fill") {
-                            navigate(to: .dashboard)
-                        }
                     }
 
                     Spacer(minLength: 4)
@@ -48,10 +44,6 @@ struct NowPlayingView: View {
                     TurntableView(assetName: albumAssetName, size: turntableSize)
 
                     Spacer(minLength: 4)
-
-                    Text("Now playing")
-                        .font(.system(size: 14, weight: .regular, design: .rounded).italic())
-                        .foregroundStyle(Color(red: 0.56, green: 0.39, blue: 0.37))
 
                     VStack(spacing: 0) {
                         Text(viewModel.state.nowPlayingArtist)
@@ -131,22 +123,6 @@ struct NowPlayingView: View {
         }
     }
 
-    private func floatingNavButton(systemName: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            ZStack {
-                Circle()
-                    .fill(Color.white.opacity(0.08))
-                    .frame(width: 30, height: 30)
-
-                Image(systemName: systemName)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.white)
-            }
-            .frame(width: 44, height: 44)
-        }
-        .buttonStyle(.plain)
-        .contentShape(Rectangle())
-    }
 }
 
 private struct TurntableView: View {

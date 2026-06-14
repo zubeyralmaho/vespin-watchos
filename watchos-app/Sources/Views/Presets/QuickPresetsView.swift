@@ -32,12 +32,6 @@ struct QuickPresetsView: View {
                         .buttonStyle(.plain)
 
                         Spacer(minLength: 0)
-
-                        topNavButton(systemName: "house.fill") {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                currentScreen = .dashboard
-                            }
-                        }
                     }
 
                     ScrollView(.vertical, showsIndicators: false) {
@@ -61,7 +55,9 @@ struct QuickPresetsView: View {
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(
                                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                            .fill(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                            .fill(viewModel.state.preset == preset
+                                                ? WatchColors.accentRed
+                                                : Color(red: 0.14, green: 0.14, blue: 0.14))
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -81,24 +77,4 @@ struct QuickPresetsView: View {
         }
     }
 
-    private func topNavButton(systemName: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            ZStack {
-                Circle()
-                    .fill(Color.clear)
-                    .frame(width: 52, height: 52)
-
-                Circle()
-                    .fill(Color.white.opacity(0.08))
-                    .frame(width: 30, height: 30)
-
-                Image(systemName: systemName)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.white)
-            }
-        }
-        .buttonStyle(.plain)
-        .frame(width: 52, height: 52)
-        .contentShape(Rectangle())
-    }
 }

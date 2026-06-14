@@ -20,12 +20,14 @@ extension QuickPreset {
         switch self {
         case .none:
             return WatchColors.border
-        case .bassBoots:
+        case .jazz:
             return WatchColors.accentGold
         case .rock:
             return WatchColors.accentBlue
         case .demo:
             return WatchColors.success
+        case .bassBoots:
+            return WatchColors.accentGold
         }
     }
 }

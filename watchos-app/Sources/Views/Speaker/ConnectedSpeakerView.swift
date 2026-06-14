@@ -81,59 +81,30 @@ struct ConnectedSpeakerView: View {
     }
 
     private var songTile: some View {
-        DashboardMockTile(tone: songTone) {
+        DashboardMockTile(tone: Color(red: 0.14, green: 0.14, blue: 0.14)) {
             navigate(to: .nowPlaying)
         } content: {
-            if viewModel.state.syncStatus == .disconnected {
-                VStack(spacing: 6) {
-                    Spacer(minLength: 0)
+            VStack(spacing: 6) {
+                Spacer(minLength: 0)
 
-                    ZStack {
-                        Image(systemName: "music.note")
-                            .font(.system(size: 30, weight: .regular))
-                            .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
+                ZStack {
+                    Image(systemName: "hand.tap")
+                        .font(.system(size: 30, weight: .regular))
+                        .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
 
-                        Image(systemName: "sparkles")
-                            .font(.system(size: 13, weight: .regular))
-                            .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
-                            .offset(x: -16, y: -12)
-                    }
-
-                    Spacer(minLength: 0)
-
-                    Text("SONG")
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
-                        .foregroundStyle(Color.white)
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
+                        .offset(x: -16, y: -12)
                 }
-                .padding(.vertical, 12)
-            } else {
-                VStack(spacing: 6) {
-                    Spacer(minLength: 0)
 
-                    Image(albumAssetName)
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .frame(width: 52, height: 52)
+                Spacer(minLength: 0)
 
-                    Spacer(minLength: 0)
-
-                    VStack(spacing: 0) {
-                        Text(viewModel.state.nowPlayingArtist)
-                            .font(.system(size: 9, weight: .regular, design: .rounded))
-                            .foregroundStyle(Color.white)
-                            .lineLimit(1)
-
-                        Text(viewModel.state.nowPlayingTitle)
-                            .font(.system(size: 9, weight: .regular, design: .rounded))
-                            .foregroundStyle(Color.white)
-                            .lineLimit(1)
-                    }
-                    .minimumScaleFactor(0.7)
-                    .padding(.horizontal, 6)
-                }
-                .padding(.vertical, 12)
+                Text("SONG")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundStyle(Color.white)
             }
+            .padding(.vertical, 12)
         }
     }
 
@@ -185,13 +156,6 @@ struct ConnectedSpeakerView: View {
         viewModel.state.preset == .bassBoots ? WatchColors.accentRed : Color(red: 0.14, green: 0.14, blue: 0.14)
     }
 
-    private var songTone: Color {
-        viewModel.state.syncStatus == .disconnected ? Color(red: 0.14, green: 0.14, blue: 0.14) : WatchColors.accentRed
-    }
-
-    private var albumAssetName: String {
-        viewModel.state.nowPlayingArtist == "Selena Gomez" ? "AlbumSelena" : "AlbumSona"
-    }
 }
 
 private struct DashboardMockTile<Content: View>: View {
