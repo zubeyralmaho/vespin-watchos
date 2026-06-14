@@ -126,11 +126,9 @@ struct StatusView: View {
                     .frame(width: imageWidth)
                     .offset(y: isSelected ? -height * 0.55 : -height * 0.38)
             }
-            .overlay {
+            .overlay(alignment: .bottom) {
                 if isSelected {
-                    VStack(spacing: 3) {
-                        Spacer(minLength: 0)
-
+                    VStack(spacing: 2) {
                         ZStack {
                             Circle()
                                 .fill(viewModel.state.syncStatus == .connected
@@ -139,25 +137,24 @@ struct StatusView: View {
                                 .shadow(color: viewModel.state.syncStatus == .connected
                                     ? Color.green.opacity(0.5) : .clear,
                                     radius: 4)
-                                .frame(width: 26, height: 26)
+                                .frame(width: 22, height: 22)
 
                             Image(systemName: "power")
-                                .font(.system(size: 13, weight: .regular))
+                                .font(.system(size: 11, weight: .regular))
                                 .foregroundStyle(viewModel.state.syncStatus == .connected
                                     ? Color(red: 0.45, green: 0.90, blue: 0.45)
                                     : Color(red: 0.55, green: 0.55, blue: 0.57))
                         }
 
                         Text(viewModel.state.syncStatus == .connected ? "Connected" : "Unconnected")
-                            .font(.system(size: 10, weight: .regular, design: .rounded))
+                            .font(.system(size: 9, weight: .regular, design: .rounded))
                             .foregroundStyle(Color(red: 0.25, green: 0.25, blue: 0.25))
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
                             .allowsTightening(true)
                             .padding(.horizontal, 2)
-
-                        Spacer(minLength: 5)
                     }
+                    .padding(.bottom, 6)
                 }
             }
     }
