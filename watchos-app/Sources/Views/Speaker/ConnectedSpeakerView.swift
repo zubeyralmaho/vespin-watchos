@@ -67,7 +67,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("EQ")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
 
                 if let eqSubtitle {
@@ -104,7 +104,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("SONG")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
             }
             .padding(.vertical, 8)
@@ -125,7 +125,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 Text("SPEAKERS")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color.white)
                     .minimumScaleFactor(0.7)
                     .lineLimit(1)
