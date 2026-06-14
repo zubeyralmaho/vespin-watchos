@@ -8,21 +8,21 @@ struct ConnectedSpeakerView: View {
         ZStack {
             WatchScreenBackground()
 
-            VStack(spacing: 6) {
-                HStack(spacing: 6) {
+            VStack(spacing: 8) {
+                HStack(spacing: 8) {
                     connectionTile
                     eqTile
                 }
-                .frame(maxHeight: 78)
+                .frame(height: 82)
 
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     songTile
                     speakersTile
                 }
-                .frame(maxHeight: 78)
+                .frame(height: 82)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 12)
         }
     }
 
