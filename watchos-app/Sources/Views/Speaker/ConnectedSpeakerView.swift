@@ -88,7 +88,7 @@ struct ConnectedSpeakerView: View {
                 Spacer(minLength: 0)
 
                 ZStack {
-                    Image(systemName: "hand.tap")
+                    Image(systemName: "music.note")
                         .font(.system(size: 30, weight: .regular))
                         .foregroundStyle(Color(red: 0.96, green: 0.92, blue: 0.90))
 
