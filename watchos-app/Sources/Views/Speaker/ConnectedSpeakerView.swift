@@ -21,7 +21,7 @@ struct ConnectedSpeakerView: View {
                 speakersTile
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 20)
         }
     }
 
@@ -168,7 +168,7 @@ private struct DashboardMockTile<Content: View>: View {
         Button(action: action) {
             content()
                 .frame(maxWidth: .infinity)
-                .frame(height: 82)
+                .frame(height: 74)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(
