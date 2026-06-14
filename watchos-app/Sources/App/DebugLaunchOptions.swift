@@ -92,6 +92,8 @@ extension QuickPreset {
         switch environmentValue?.lowercased() {
         case "none":
             self = .none
+        case "jazz":
+            self = .jazz
         case "bassboots", "bass-boots", "bass":
             self = .bassBoots
         case "rock":

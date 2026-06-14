@@ -13,5 +13,8 @@ DerivedData/
 # XcodeGen-generated project (source of truth is project.yml)
 VespinWatch.xcodeproj/
 
+# JetBrains/Android Studio IDE files
+.idea/
+
 # Scratch / tooling output
 .tmp/
