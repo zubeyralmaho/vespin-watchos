@@ -13,15 +13,16 @@ struct ConnectedSpeakerView: View {
                     connectionTile
                     eqTile
                 }
+                .frame(maxHeight: 78)
+
                 HStack(spacing: 6) {
                     songTile
                     speakersTile
                 }
+                .frame(maxHeight: 78)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 10)
-            .padding(.top, 28)
-            .padding(.bottom, 18)
         }
     }
 
