@@ -38,9 +38,8 @@ struct NowPlayingView: View {
                         Spacer(minLength: 0)
                     }
 
-                    Spacer(minLength: 2)
-
                     TurntableView(assetName: albumAssetName, size: turntableSize)
+                        .padding(.top, -2)
 
                     Spacer(minLength: 2)
 
@@ -130,6 +129,11 @@ private struct TurntableView: View {
     var body: some View {
         ZStack {
             Circle()
+                .fill(Color(red: 0.96, green: 0.72, blue: 0.55).opacity(0.55))
+                .frame(width: size * 1.15, height: size * 1.15)
+                .blur(radius: size * 0.22)
+
+            Circle()
                 .fill(Color(red: 0.95, green: 0.91, blue: 0.88))
                 .shadow(color: Color.black.opacity(0.45), radius: 18, y: 10)
 
@@ -148,7 +152,7 @@ private struct TurntableView: View {
             Image(assetName)
                 .resizable()
                 .scaledToFill()
-                .frame(width: size * 0.36, height: size * 0.36)
+                .frame(width: size * 0.50, height: size * 0.50)
                 .clipShape(Circle())
 
             Capsule()
