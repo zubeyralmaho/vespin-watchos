@@ -8,18 +8,17 @@ struct ConnectedSpeakerView: View {
         ZStack {
             WatchScreenBackground()
 
-            VStack(spacing: 8) {
-                HStack(spacing: 8) {
-                    connectionTile
-                    eqTile
-                }
-                .frame(height: 82)
-
-                HStack(spacing: 8) {
-                    songTile
-                    speakersTile
-                }
-                .frame(height: 82)
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 8),
+                    GridItem(.flexible(), spacing: 8)
+                ],
+                spacing: 8
+            ) {
+                connectionTile
+                eqTile
+                songTile
+                speakersTile
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 12)
@@ -168,7 +167,8 @@ private struct DashboardMockTile<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity)
+                .frame(height: 82)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(
