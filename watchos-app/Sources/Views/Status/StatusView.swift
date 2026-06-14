@@ -153,6 +153,10 @@ struct StatusView: View {
                         Text(viewModel.state.syncStatus == .connected ? "Connected" : "Unconnected")
                             .font(.system(size: 9, weight: .regular, design: .rounded))
                             .foregroundStyle(Color(red: 0.25, green: 0.25, blue: 0.25))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .allowsTightening(true)
+                            .padding(.horizontal, 2)
 
                         Spacer(minLength: 5)
                     }
