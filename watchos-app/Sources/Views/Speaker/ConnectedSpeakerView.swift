@@ -27,7 +27,9 @@ struct ConnectedSpeakerView: View {
 
     private var connectionTile: some View {
         DashboardMockTile(tone: connectionTone) {
-            navigate(to: .speakersConnected)
+            withAnimation(.easeInOut(duration: 0.2)) {
+                viewModel.toggleConnection()
+            }
         } content: {
             VStack(spacing: 6) {
                 Spacer(minLength: 0)
@@ -126,13 +128,6 @@ struct ConnectedSpeakerView: View {
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(Color.white)
                     .minimumScaleFactor(0.7)
-                    .lineLimit(1)
-
-                Text(viewModel.state.roomName)
-                    .font(.system(size: 10, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Color.white)
-                    .shadow(color: Color.white.opacity(0.45), radius: 6)
-                    .minimumScaleFactor(0.75)
                     .lineLimit(1)
             }
             .padding(.vertical, 8)
