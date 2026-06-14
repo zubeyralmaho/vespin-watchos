@@ -41,7 +41,7 @@ struct StatusView: View {
                         .foregroundStyle(Color.white)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .padding(.top, 4)
+                        .padding(.top, 2)
 
                     if viewModel.state.syncStatus == .connected {
                         HStack(spacing: 4) {
@@ -52,23 +52,20 @@ struct StatusView: View {
                                 .monospacedDigit()
                         }
                         .foregroundStyle(WatchColors.success)
-                        .padding(.top, 2)
+                        .padding(.top, 1)
                     }
-
-                    Spacer(minLength: 4)
 
                     speakerCarousel(unit: speakerUnit)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.horizontal, 6)
-                .padding(.top, 8)
                 .padding(.bottom, 4)
             }
         }
     }
 
     private func speakerCarousel(unit: CGFloat) -> some View {
-        let overhangReserve = unit * 0.42 * 0.55
+        let overhangReserve = unit * 0.50 * 0.6
 
         return HStack(alignment: .bottom, spacing: unit * 0.04) {
             ForEach(Array(viewModel.speakerCarousel.enumerated()), id: \.element.id) { index, speaker in
@@ -127,7 +124,7 @@ struct StatusView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: imageWidth)
-                    .offset(y: -height * 0.38)
+                    .offset(y: isSelected ? -height * 0.55 : -height * 0.38)
             }
             .overlay {
                 if isSelected {
