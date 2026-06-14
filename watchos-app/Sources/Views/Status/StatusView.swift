@@ -139,10 +139,10 @@ struct StatusView: View {
                                 .shadow(color: viewModel.state.syncStatus == .connected
                                     ? Color.green.opacity(0.5) : .clear,
                                     radius: 4)
-                                .frame(width: 36, height: 36)
+                                .frame(width: 26, height: 26)
 
                             Image(systemName: "power")
-                                .font(.system(size: 18, weight: .regular))
+                                .font(.system(size: 13, weight: .regular))
                                 .foregroundStyle(viewModel.state.syncStatus == .connected
                                     ? Color(red: 0.45, green: 0.90, blue: 0.45)
                                     : Color(red: 0.55, green: 0.55, blue: 0.57))
