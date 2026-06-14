@@ -11,25 +11,24 @@ struct NowPlayingView: View {
             GeometryReader { proxy in
                 // Densest screen: keep the turntable bounded by height so the
                 // transport controls and footer always stay on screen (40/41mm).
-                let turntableSize = min(proxy.size.width * 0.46, proxy.size.height * 0.30)
+                let turntableSize = min(proxy.size.width * 0.38, proxy.size.height * 0.26)
 
-                ScrollView(.vertical, showsIndicators: false) {
-                  VStack(spacing: 0) {
+                VStack(spacing: 0) {
                     HStack {
                         Button {
                             navigate(to: .dashboard)
                         } label: {
-                            HStack(spacing: 6) {
+                            HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 22, weight: .regular))
+                                    .font(.system(size: 18, weight: .regular))
 
                                 ZStack(alignment: .topLeading) {
                                     Image(systemName: "music.note")
-                                        .font(.system(size: 17, weight: .regular))
+                                        .font(.system(size: 14, weight: .regular))
 
                                     Image(systemName: "sparkles")
-                                        .font(.system(size: 9, weight: .regular))
-                                        .offset(x: -8, y: -2)
+                                        .font(.system(size: 8, weight: .regular))
+                                        .offset(x: -6, y: -2)
                                 }
                             }
                             .foregroundStyle(Color.white)
@@ -39,31 +38,30 @@ struct NowPlayingView: View {
                         Spacer(minLength: 0)
                     }
 
-                    Spacer(minLength: 4)
+                    Spacer(minLength: 2)
 
                     TurntableView(assetName: albumAssetName, size: turntableSize)
 
-                    Spacer(minLength: 4)
+                    Spacer(minLength: 2)
 
                     VStack(spacing: 0) {
                         Text(viewModel.state.nowPlayingArtist)
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
                             .foregroundStyle(Color.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
 
                         Text(viewModel.state.nowPlayingTitle)
-                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                            .font(.system(size: 14, weight: .regular, design: .rounded))
                             .foregroundStyle(Color.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
                     }
-                    .padding(.top, 1)
 
-                    Spacer(minLength: 6)
+                    Spacer(minLength: 4)
 
-                    HStack(spacing: 30) {
-                        PlainIconButton(systemName: "backward.end.fill", size: 20) {
+                    HStack(spacing: 22) {
+                        PlainIconButton(systemName: "backward.end.fill", size: 15) {
                             viewModel.previousTrack()
                         }
 
@@ -72,44 +70,43 @@ struct NowPlayingView: View {
                         } label: {
                             ZStack {
                                 Circle()
-                                    .stroke(Color.white, lineWidth: 3.5)
-                                    .frame(width: 46, height: 46)
+                                    .stroke(Color.white, lineWidth: 2.5)
+                                    .frame(width: 34, height: 34)
 
                                 Image(systemName: viewModel.state.playbackStatus == .playing ? "pause.fill" : "play.fill")
-                                    .font(.system(size: 17, weight: .semibold))
+                                    .font(.system(size: 13, weight: .semibold))
                                     .foregroundStyle(Color.white)
                             }
                         }
                         .buttonStyle(.plain)
 
-                        PlainIconButton(systemName: "forward.end.fill", size: 20) {
+                        PlainIconButton(systemName: "forward.end.fill", size: 15) {
                             viewModel.nextTrack()
                         }
                     }
 
-                    Spacer(minLength: 6)
+                    Spacer(minLength: 4)
 
-                    HStack(spacing: 6) {
+                    HStack(spacing: 4) {
                         Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 12, weight: .medium))
+                            .font(.system(size: 10, weight: .medium))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
 
                         Text(viewModel.state.nowPlayingCollection)
-                            .font(.system(size: 12, weight: .regular, design: .rounded))
+                            .font(.system(size: 10, weight: .regular, design: .rounded))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
                             .lineLimit(1)
                             .minimumScaleFactor(0.7)
 
                         Text("•••")
-                            .font(.system(size: 12, weight: .bold))
+                            .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Color(red: 0.66, green: 0.42, blue: 0.33))
                     }
-                  }
-                  .frame(minHeight: proxy.size.height)
-                  .frame(maxWidth: .infinity, alignment: .top)
-                  .padding(.horizontal, 10)
-                  .padding(.top, 6)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(.horizontal, 10)
+                .padding(.top, 4)
+                .padding(.bottom, 4)
             }
         }
     }
